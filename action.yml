@@ -29,5 +29,5 @@ outputs:
   issues:
     description: "issue IDs, comma separated"
 runs:
-  using: "docker"
-  image: "Dockerfile"
+  using: "node12"
+  main: "dist/index.js"

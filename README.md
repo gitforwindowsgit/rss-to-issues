@@ -99,3 +99,5 @@ jobs:
 ## Compatibility
 
 This GitHub Action is a Javascript port of the Go version at [`guilhem/rss-issues-action`](https://github.com/guilhem/rss-issues-action). The port exists because the Go version has to run in a Docker image, and therefore it is slower to load than the Javascript Action, it has to be pre-compiled, and it has to be uploaded to a Docker registry (i.e. it is subject to network issues when there is a problem connecting from GitHub Actions' build agents).
+
+While at it, the Javascript version fixes the bug where `rss-issues-action` did not set the output as documented.
