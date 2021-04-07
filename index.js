@@ -27,7 +27,7 @@ const run = async () => {
     if (dryRun) dryRun = dryRun === 'true'
     let aggregate = core.getInput('aggregate')
     if (aggregate) aggregate = aggregate === 'true'
-    let characterLimit = core.getInput('characterLimit')
+    let characterLimit = core.getInput('character-limit')
     if (characterLimit) characterLimit = parseInt(characterLimit)
     const titleFilter = core.getInput('titleFilter')
     const contentFilter = core.getInput('contentFilter')

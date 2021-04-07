@@ -38,9 +38,9 @@ Log issue creation but do nothing
 
 Aggregate all items in a single issue
 
-### `characterLimit`
+### `character-limit`
 
-Limit size of issue content
+Limit the issue contents' size
 
 ### `titleFilter`
 
@@ -86,7 +86,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           feed: https://github.com/git/git/tags.atom
           prefix: "[Git]"
-          characterLimit: 255
+          character-limit: 255
           dry-run: false
           max-age: 48h
           labels: git
@@ -104,6 +104,7 @@ This Action uses different input names than `rss-issues-action` (e.g. `github-to
 
 - `repo-token` was renamed to `github-token`
 - `lastTime` was renamed to `max-age`
+- `characterLimit` was renamed to `content-limit`
 
 Another big difference is that this Action understands Javascript regular expressions, i.e. it supports lookaheads and friends, something that Go's `RE2` does not support.
 

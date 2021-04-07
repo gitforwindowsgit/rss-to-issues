@@ -19,8 +19,8 @@ inputs:
     description: "Log issue creation but do nothing"
   aggregate:
     description: "Aggregate all items in a single issue"
-  characterLimit:
-    description: "Limit size of issue content"
+  character-limit:
+    description: "Limit the issue contents' size"
   titleFilter:
     description: "Filter out entries whose titles match this regex"
   contentFilter:
