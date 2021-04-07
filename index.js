@@ -39,7 +39,7 @@ const run = async () => {
     core.debug(`labels ${labels}`)
 
     // Instantiate GitHub client
-    const octokit = getOctokit(core.getInput('repo-token'))
+    const octokit = getOctokit(core.getInput('github-token'))
 
     // Instantiate feed parser
     const feed = await (new RSSParser()).parseURL(core.getInput('feed'))

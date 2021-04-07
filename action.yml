@@ -5,7 +5,7 @@ branding:
   icon: "rss"
   color: "orange"
 inputs:
-  repo-token:
+  github-token:
     description: "The GITHUB_TOKEN secret"
   feed:
     description: "URL of the RSS/Atom feed"

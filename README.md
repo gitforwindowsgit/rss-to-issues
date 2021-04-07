@@ -8,7 +8,7 @@ This GitHub Action is a Javascript port of the [rss-issues Action](https://githu
 
 ## Inputs
 
-### `repo-token`
+### `github-token`
 
 **Required** the `GITHUB_TOKEN` secret.
 
@@ -63,7 +63,7 @@ Issue IDs, comma separated.
 ```yaml
 uses: git-for-windows/rss-to-issues
 with:
-  repo-token: ${{ secrets.GITHUB_TOKEN }}
+  github-token: ${{ secrets.GITHUB_TOKEN }}
   feed: "https://cloud.google.com/feeds/kubernetes-engine-release-notes.xml"
 ```
 
@@ -83,7 +83,7 @@ jobs:
     steps:
       - uses: git-for-windows/rss-to-issues@v0
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           feed: https://github.com/git/git/tags.atom
           prefix: "[Git]"
           characterLimit: 255
@@ -99,5 +99,9 @@ jobs:
 ## Compatibility
 
 This GitHub Action is a Javascript port of the Go version at [`guilhem/rss-issues-action`](https://github.com/guilhem/rss-issues-action). The port exists because the Go version has to run in a Docker image, and therefore it is slower to load than the Javascript Action, it has to be pre-compiled, and it has to be uploaded to a Docker registry (i.e. it is subject to network issues when there is a problem connecting from GitHub Actions' build agents).
+
+This Action uses different input names than `rss-issues-action` (e.g. `github-token` instead of `repo-token`).
+
+Another big difference is that this Action understands Javascript regular expressions, i.e. it supports lookaheads and friends, something that Go's `RE2` does not support.
 
 While at it, the Javascript version fixes the bug where `rss-issues-action` did not set the output as documented.
