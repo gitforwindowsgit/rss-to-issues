@@ -1,6 +1,6 @@
-name: "rss-issues"
-author: "Guilhem Lettron"
-description: "Create Issues based on RSS"
+name: "rss-to-issues"
+author: "Johannes Schindelin, Guilhem Lettron"
+description: "Create Issues from RSS/Atom feeds"
 branding:
   icon: "rss"
   color: "orange"
@@ -8,9 +8,9 @@ inputs:
   repo-token:
     description: "The GITHUB_TOKEN secret"
   feed:
-    description: "URL of the rss"
+    description: "URL of the RSS/Atom feed"
   prefix:
-    description: "Prefix added to issues"
+    description: "Prefix added to the created issues' titles"
   lastTime:
     description: "limit RSS items to this time"
   labels:
@@ -27,7 +27,7 @@ inputs:
     description: "Filter out entries whose contents match this regex"
 outputs:
   issues:
-    description: "issues id, comma separated"
+    description: "issue IDs, comma separated"
 runs:
   using: "docker"
   image: "Dockerfile"
