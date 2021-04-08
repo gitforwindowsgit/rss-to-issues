@@ -70,7 +70,7 @@ with:
 ### complete
 
 ```yaml
-name: rss
+name: Monitor new Git versions
 
 on:
   schedule:
@@ -84,12 +84,12 @@ jobs:
       - uses: git-for-windows/rss-to-issues@v0
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          feed: "https://cloud.google.com/feeds/kubernetes-engine-release-notes.xml"
-          prefix: "[GKE]"
-          characterLimit: "255"
-          dry-run: "false"
-          lastTime: "92h"
-          labels: "liens/Kubernetes"
+          feed: https://github.com/git/git/tags.atom
+          prefix: "[Git]"
+          characterLimit: 255
+          dry-run: false
+          lastTime: 48h
+          labels: git
 ```
 
 ### Real Usage
