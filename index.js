@@ -30,7 +30,7 @@ const run = async () => {
     let characterLimit = core.getInput('character-limit')
     if (characterLimit) characterLimit = parseInt(characterLimit)
     const titlePattern = core.getInput('title-pattern')
-    const contentFilter = core.getInput('contentFilter')
+    const contentPattern = core.getInput('content-pattern')
 
     const limitTime = Date.now() - parseDurationInMilliseconds(core.getInput('max-age'))
     core.debug(`limitTime ${limitTime}`)
@@ -78,8 +78,8 @@ const run = async () => {
       // Issue Content
       const content = item.content || item.description || ''
 
-      if (contentFilter && content.match(contentFilter)) {
-        core.debug$(`No issue created due to content filter (${title})`)
+      if (contentPattern && !content.match(contentPattern)) {
+        core.debug$(`Feed item skipped because it does not match the content pattern (${title})`)
         continue
       }
 

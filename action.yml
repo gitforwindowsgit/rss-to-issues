@@ -23,8 +23,8 @@ inputs:
     description: "Limit the issue contents' size"
   title-pattern:
     description: "Limit to feed items whose titles match this regular expression"
-  contentFilter:
-    description: "Filter out entries whose contents match this regex"
+  content-pattern:
+    description: "Limit to feed items whose contents match this regular expression"
 outputs:
   issues:
     description: "issue IDs, comma separated"
