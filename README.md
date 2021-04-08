@@ -108,7 +108,7 @@ This Action uses different input names than `rss-issues-action` (e.g. `github-to
 
 - `repo-token` was renamed to `github-token`
 - `lastTime` was renamed to `max-age`
-- `characterLimit` was renamed to `content-limit`
+- `characterLimit` was renamed to `character-limit`
 - `titleFilter` corresponds to `title-pattern` and is no longer _exclusive_ but _inclusive_ (read: only feed items matching the `title-pattern` are processed, as opposed to excluding feed items matching the `titleFilter` pattern)
 - `contentFilter` corresponds to `content-pattern` and is no longer _exclusive_ but _inclusive_ (read: only feed items matching the `content-pattern` are processed, as opposed to excluding feed items matching the `contentFilter` pattern)
 
