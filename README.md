@@ -42,9 +42,11 @@ Aggregate all items in a single issue
 
 Limit the issue contents' size
 
-### `titleFilter`
+### `title-pattern`
 
-Don't create an issue if the title matches the specified regular expression ([Javascript regular expression syntax](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions))
+Only create an issue if the title matches the specified [regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions).
+
+To _exclude_ titles based on a pattern, you can use a negative lookahead. For example, to filter out all feed items whose title contains "TEST", use a regular expression like `/^(?!.*TEST)/`.
 
 ### `contentFilter`
 
@@ -105,6 +107,7 @@ This Action uses different input names than `rss-issues-action` (e.g. `github-to
 - `repo-token` was renamed to `github-token`
 - `lastTime` was renamed to `max-age`
 - `characterLimit` was renamed to `content-limit`
+- `titleFilter` corresponds to `title-pattern` and is no longer _exclusive_ but _inclusive_ (read: only feed items matching the `title-pattern` are processed, as opposed to excluding feed items matching the `titleFilter` pattern)
 
 Another big difference is that this Action understands Javascript regular expressions, i.e. it supports lookaheads and friends, something that Go's `RE2` does not support.
 

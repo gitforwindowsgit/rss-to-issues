@@ -29,7 +29,7 @@ const run = async () => {
     if (aggregate) aggregate = aggregate === 'true'
     let characterLimit = core.getInput('character-limit')
     if (characterLimit) characterLimit = parseInt(characterLimit)
-    const titleFilter = core.getInput('titleFilter')
+    const titlePattern = core.getInput('title-pattern')
     const contentFilter = core.getInput('contentFilter')
 
     const limitTime = Date.now() - parseDurationInMilliseconds(core.getInput('max-age'))
@@ -63,8 +63,8 @@ const run = async () => {
     // Iterate
     for (const item of feed.items) {
       let title = `${issueTitlePrefix ? issueTitlePrefix + ' ' : ''}${item.title}`
-      if (titleFilter && title.match(titleFilter)) {
-        core.debug(`No issue created due to title filter (${title})`)
+      if (titlePattern && !title.match(titlePattern)) {
+        core.debug(`Feed item skipped because it does not match the title pattern (${title})`)
         continue
       }
 
