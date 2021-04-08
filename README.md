@@ -20,7 +20,7 @@ This GitHub Action is a Javascript port of the [rss-issues Action](https://githu
 
 Prefix added to the created issues' titles.
 
-### `lastTime`
+### `max-age`
 
 If specified, only look at feed items younger than the specified age. For example, `48h` will only look at feed items from the last forty-eight hours.
 
@@ -88,7 +88,7 @@ jobs:
           prefix: "[Git]"
           characterLimit: 255
           dry-run: false
-          lastTime: 48h
+          max-age: 48h
           labels: git
 ```
 
@@ -100,7 +100,10 @@ jobs:
 
 This GitHub Action is a Javascript port of the Go version at [`guilhem/rss-issues-action`](https://github.com/guilhem/rss-issues-action). The port exists because the Go version has to run in a Docker image, and therefore it is slower to load than the Javascript Action, it has to be pre-compiled, and it has to be uploaded to a Docker registry (i.e. it is subject to network issues when there is a problem connecting from GitHub Actions' build agents).
 
-This Action uses different input names than `rss-issues-action` (e.g. `github-token` instead of `repo-token`).
+This Action uses different input names than `rss-issues-action` (e.g. `github-token` instead of `repo-token`). This is the full list of the mappings:
+
+- `repo-token` was renamed to `github-token`
+- `lastTime` was renamed to `max-age`
 
 Another big difference is that this Action understands Javascript regular expressions, i.e. it supports lookaheads and friends, something that Go's `RE2` does not support.
 

@@ -11,8 +11,8 @@ inputs:
     description: "URL of the RSS/Atom feed"
   prefix:
     description: "Prefix added to the created issues' titles"
-  lastTime:
-    description: "limit RSS items to this time"
+  max-age:
+    description: "Only look at feed items younger than this"
   labels:
     description: "Labels to add, comma separated"
   dry-run:

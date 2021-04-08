@@ -32,7 +32,7 @@ const run = async () => {
     const titleFilter = core.getInput('titleFilter')
     const contentFilter = core.getInput('contentFilter')
 
-    const limitTime = Date.now() - parseDurationInMilliseconds(core.getInput('lastTime'))
+    const limitTime = Date.now() - parseDurationInMilliseconds(core.getInput('max-age'))
     core.debug(`limitTime ${limitTime}`)
 
     const labels = core.getInput('labels')
