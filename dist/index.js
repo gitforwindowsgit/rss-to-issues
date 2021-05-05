@@ -38299,8 +38299,9 @@ const run = async () => {
     const createdIssues = []
 
     // Iterate
+    let counter = 0
     for (const item of feed.items) {
-      let title = `${issueTitlePrefix}${item.title}`
+      const title = `${issueTitlePrefix}${item.title}`
       if (titlePattern && !title.match(titlePattern)) {
         core.debug(`Feed item skipped because it does not match the title pattern (${title})`)
         continue
@@ -38342,11 +38343,19 @@ const run = async () => {
         // Create Issue
         createdIssues.push({ title, body, labels })
       } else {
-        title = `${issueTitlePrefix}${new Date().toTimeString()}`
-        createdIssues[0].title = title
+        if (counter === 1) {
+          // The title of aggregated items will be "<n>new items";
+          // Add the title to the body so that it does not go poof
+          createdIssues[0].body = `# ${createdIssues[0].title}\n\n${createdIssues[0].body}`
+        }
 
-        createdIssues[0].body += `\n\n${body}`
+        createdIssues[0].body += `\n\n# ${title}\n\n${body}`
       }
+      counter++
+    }
+
+    if (aggregate && counter > 1) {
+      createdIssues[0].title = `${issueTitlePrefix}${counter} new items`
     }
 
     for (const issue of createdIssues) {
