@@ -76,6 +76,11 @@ const run = async () => {
         continue
       }
 
+      if (aggregate && issues.find(x => x.title.startsWith(issueTitlePrefix) && Date.parse(x.created_at) > Date.parse(item.isoDate))) {
+        core.warning('Newer issue with same prefix already exists')
+        continue
+      }
+
       // Issue Content
       const content = item.content || item.description || ''
 
