@@ -38,6 +38,8 @@ Log issue creation but do nothing
 
 Aggregate all items in a single issue
 
+Note: If you use this Action to create issues from multiple aggregated feeds in the same repository, give them different prefixes and/or labels.
+
 ### `character-limit`
 
 Limit the issue contents' size
