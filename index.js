@@ -22,7 +22,8 @@ const parseDurationInMilliseconds = (text) => {
 
 const run = async () => {
   try {
-    const issueTitlePrefix = core.getInput('prefix')
+    let issueTitlePrefix = core.getInput('prefix')
+    issueTitlePrefix = issueTitlePrefix ? issueTitlePrefix + ' ' : ''
     let dryRun = core.getInput('dry-run')
     if (dryRun) dryRun = dryRun === 'true'
     let aggregate = core.getInput('aggregate')
@@ -62,7 +63,7 @@ const run = async () => {
 
     // Iterate
     for (const item of feed.items) {
-      let title = `${issueTitlePrefix ? issueTitlePrefix + ' ' : ''}${item.title}`
+      let title = `${issueTitlePrefix}${item.title}`
       if (titlePattern && !title.match(titlePattern)) {
         core.debug(`Feed item skipped because it does not match the title pattern (${title})`)
         continue
@@ -99,7 +100,7 @@ const run = async () => {
         // Create Issue
         createdIssues.push({ title, body, labels })
       } else {
-        title = `${issueTitlePrefix ? issueTitlePrefix + ' ' : ''}${new Date().toTimeString()}`
+        title = `${issueTitlePrefix}${new Date().toTimeString()}`
         createdIssues[0].title = title
 
         createdIssues[0].body += `\n\n${body}`
