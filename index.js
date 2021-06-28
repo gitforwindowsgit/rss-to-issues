@@ -44,7 +44,8 @@ const run = async () => {
 
     // Instantiate feed parser
     const feed = await (new RSSParser()).parseURL(core.getInput('feed'))
-    core.info(feed.title)
+    core.info(feed && feed.title)
+    if (!feed.items || feed.items.length === 0) return
 
     // Remove old items in feed
     feed.items = feed.items.filter(x => x.pubDate === undefined || limitTime < new Date(x.pubDate).getTime())
