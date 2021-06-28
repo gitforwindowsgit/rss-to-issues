@@ -144,8 +144,13 @@ const run = async () => {
 
     core.setOutput('issues', createdIssues.map(item => item.id).join(','))
   } catch (e) {
+    if (typeof jest !== 'undefined') throw e
     core.setFailed(e.message)
   }
 }
 
-run()
+if (typeof jest !== 'undefined') {
+  module.exports = run
+} else {
+  run()
+}
