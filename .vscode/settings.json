@@ -4,5 +4,6 @@
         "lookaheads",
         "octokit",
         "vercel"
-    ]
+    ],
+    "debug.javascript.unmapMissingSources": true
 }
