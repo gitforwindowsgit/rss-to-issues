@@ -65,7 +65,7 @@ const run = async () => {
     // Iterate
     let counter = 0
     for (const item of feed.items) {
-      const title = `${issueTitlePrefix}${item.title}`
+      const title = `${issueTitlePrefix}${item.title || (item.pubDate && new Date(item.pubDate).toUTCString())}`
       if (titlePattern && !title.match(titlePattern)) {
         core.debug(`Feed item skipped because it does not match the title pattern (${title})`)
         continue
