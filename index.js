@@ -44,7 +44,8 @@ const run = async () => {
 
     // Instantiate feed parser
     const feed = await (new RSSParser()).parseURL(core.getInput('feed'))
-    core.info(feed.title)
+    core.info(feed && feed.title)
+    if (!feed.items || feed.items.length === 0) return
 
     // Remove old items in feed
     feed.items = feed.items.filter(x => x.pubDate === undefined || limitTime < new Date(x.pubDate).getTime())
@@ -64,7 +65,7 @@ const run = async () => {
     // Iterate
     let counter = 0
     for (const item of feed.items) {
-      const title = `${issueTitlePrefix}${item.title}`
+      const title = `${issueTitlePrefix}${item.title || (item.pubDate && new Date(item.pubDate).toUTCString())}`
       if (titlePattern && !title.match(titlePattern)) {
         core.debug(`Feed item skipped because it does not match the title pattern (${title})`)
         continue
@@ -143,8 +144,13 @@ const run = async () => {
 
     core.setOutput('issues', createdIssues.map(item => item.id).join(','))
   } catch (e) {
+    if (typeof jest !== 'undefined') throw e
     core.setFailed(e.message)
   }
 }
 
-run()
+if (typeof jest !== 'undefined') {
+  module.exports = run
+} else {
+  run()
+}

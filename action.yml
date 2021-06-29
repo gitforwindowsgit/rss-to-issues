@@ -7,12 +7,15 @@ branding:
 inputs:
   github-token:
     description: "The GITHUB_TOKEN secret"
+    required: true
   feed:
     description: "URL of the RSS/Atom feed"
-  prefix:
-    description: "Prefix added to the created issues' titles"
+    required: true
   max-age:
     description: "Only look at feed items younger than this"
+    required: true
+  prefix:
+    description: "Prefix added to the created issues' titles"
   labels:
     description: "Labels to add, comma separated"
   dry-run:
