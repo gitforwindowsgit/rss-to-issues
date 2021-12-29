@@ -1,7 +1,7 @@
 const core = require('@actions/core')
 const { getOctokit, context } = require('@actions/github')
 const RSSParser = require('rss-parser')
-const TurnDown = require('turndown')
+const html2md = require('html-to-md')
 
 const parseDurationInMilliseconds = (text) => {
   let ms = 0
@@ -43,7 +43,7 @@ const run = async () => {
     const octokit = getOctokit(core.getInput('github-token'))
 
     // Instantiate feed parser
-    const feed = await (new RSSParser()).parseURL(core.getInput('feed'))
+    const feed = await (new RSSParser({ xml2js: { trim: true } })).parseURL(core.getInput('feed'))
     core.info(feed && feed.title)
     if (!feed.items || feed.items.length === 0) return
 
@@ -57,8 +57,6 @@ const run = async () => {
       labels: labels
     })
     core.debug(`${issues.length} issues`)
-
-    const turndownService = new TurnDown()
 
     const createdIssues = []
 
@@ -91,7 +89,7 @@ const run = async () => {
         continue
       }
 
-      let markdown = turndownService.turndown(content)
+      let markdown = html2md(content)
 
       // truncate if characterLimit > 0
       if (characterLimit && markdown.length > characterLimit) {
