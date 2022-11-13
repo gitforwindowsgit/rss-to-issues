@@ -3,7 +3,7 @@ const https = require('https')
 
 jest.mock('@actions/core')
 jest.mock('@actions/github')
-jest.mock('turndown')
+jest.mock('html-to-md')
 
 const core = require('@actions/core')
 const { getOctokit, context } = require('@actions/github')
