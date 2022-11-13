@@ -5,6 +5,9 @@ on:
     tags:
     - 'v*' # Push events to release tags
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Publish GitHub Release from tag
@@ -12,6 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
+          token: ${{ secrets.PUSH_RELEASE_TRAINS_PAT }}
           fetch-depth: 0
       - name: Import public GPG keys to verify the tag
         uses: actions/github-script@v3
