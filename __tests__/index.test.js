@@ -71,3 +71,53 @@ test('handles feed entries without titles', async () => {
     body: 'TBD\n'
   })
 })
+
+test('html to markdown conversion', async () => {
+  const date = new Date().toISOString()
+  mockHTTPSGet.__RETURN__ = `<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xml:lang="en-US">
+  <id>tag:github.com,2008:/git-for-windows/rss-to-issues/commits/main</id>
+  <link type="text/html" rel="alternate" href="https://github.com/git-for-windows/rss-to-issues/commits/main"/>
+  <link type="application/atom+xml" rel="self" href="https://github.com/git-for-windows/rss-to-issues/commits/main.atom"/>
+  <title>Recent Commits to rss-to-issues:main</title>
+  <updated>${date}</updated>
+  <entry>
+    <id>tag:github.com,2008:Grit::Commit/394ee852b18c5e3bca536b585cbb95d32ce77057</id>
+    <link type="text/html" rel="alternate" href="https://github.com/git-for-windows/rss-to-issues/commit/394ee852b18c5e3bca536b585cbb95d32ce77057"/>
+    <title>
+        ci(release-tags): use newer versions of Actions
+    </title>
+    <updated>${date}</updated>
+    <media:thumbnail height="30" width="30" url="https://avatars.githubusercontent.com/u/127790?s=30&amp;v=4"/>
+    <author>
+      <name>dscho</name>
+      <uri>https://github.com/dscho</uri>
+    </author>
+    <content type="html">
+      &lt;pre style=&#39;white-space:pre-wrap;width:81ex&#39;&gt;ci(release-tags): use newer versions of Actions
+
+This avoids warnings about node.js/set-output deprecations.
+
+Signed-off-by: Johannes Schindelin &amp;lt;johannes.schindelin@gmx.de&amp;gt;&lt;/pre&gt;
+    </content>
+  </entry>
+</feed>
+`
+  octokit.issues.listForRepo.mockReturnValueOnce({ data: [] })
+  await run()
+
+  expect(octokit.issues.create).toBeCalledWith({
+    owner: 'owner',
+    repo: 'repo',
+    title: 'ci(release-tags): use newer versions of Actions',
+    body: `\`\`\`
+ci(release-tags): use newer versions of Actions
+
+This avoids warnings about node.js/set-output deprecations.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+\`\`\`
+
+https://github.com/git-for-windows/rss-to-issues/commit/394ee852b18c5e3bca536b585cbb95d32ce77057`
+  })
+})
