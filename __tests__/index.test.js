@@ -3,7 +3,6 @@ const https = require('https')
 
 jest.mock('@actions/core')
 jest.mock('@actions/github')
-jest.mock('html-to-md')
 
 const core = require('@actions/core')
 const { getOctokit, context } = require('@actions/github')
@@ -69,6 +68,6 @@ test('handles feed entries without titles', async () => {
     owner: 'owner',
     repo: 'repo',
     title: new Date(date).toUTCString(),
-    body: '\n'
+    body: 'TBD\n'
   })
 })
