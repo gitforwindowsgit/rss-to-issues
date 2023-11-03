@@ -50,9 +50,9 @@ test('handles feeds without any entries', async () => {
   mockHTTPSGet.__RETURN__ = '<feed xmlns="http://www.w3.org/2005/Atom" />'
   await run()
 
-  expect(https.get).toBeCalledTimes(1)
-  expect(octokit.issues.listForRepo).not.toBeCalled()
-  expect(octokit.issues.create).not.toBeCalled()
+  expect(https.get).toHaveBeenCalledTimes(1)
+  expect(octokit.issues.listForRepo).not.toHaveBeenCalled()
+  expect(octokit.issues.create).not.toHaveBeenCalled()
 })
 
 test('handles feed entries without titles', async () => {
@@ -62,9 +62,9 @@ test('handles feed entries without titles', async () => {
   octokit.issues.listForRepo.mockReturnValueOnce({ data: [] })
   await run()
 
-  expect(https.get).toBeCalledTimes(1)
-  expect(octokit.issues.listForRepo).toBeCalledTimes(1)
-  expect(octokit.issues.create).toBeCalledWith({
+  expect(https.get).toHaveBeenCalledTimes(1)
+  expect(octokit.issues.listForRepo).toHaveBeenCalledTimes(1)
+  expect(octokit.issues.create).toHaveBeenCalledWith({
     owner: 'owner',
     repo: 'repo',
     title: new Date(date).toUTCString(),
@@ -106,7 +106,7 @@ Signed-off-by: Johannes Schindelin &amp;lt;johannes.schindelin@gmx.de&amp;gt;&lt
   octokit.issues.listForRepo.mockReturnValueOnce({ data: [] })
   await run()
 
-  expect(octokit.issues.create).toBeCalledWith({
+  expect(octokit.issues.create).toHaveBeenCalledWith({
     owner: 'owner',
     repo: 'repo',
     title: 'ci(release-tags): use newer versions of Actions',
