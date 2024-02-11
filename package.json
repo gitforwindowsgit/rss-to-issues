@@ -28,7 +28,7 @@
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^4.0.0",
-    "html-to-md": "^0.8.0",
+    "html-to-md": "^0.8.5",
     "rss-parser": "^3.13.0"
   },
   "devDependencies": {
