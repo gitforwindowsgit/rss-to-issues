@@ -50,7 +50,7 @@ const run = async () => {
     // Remove old items in feed
     feed.items = feed.items.filter(x => x.pubDate === undefined || limitTime < new Date(x.pubDate).getTime())
 
-    const { data: issues } = await octokit.issues.listForRepo({
+    const { data: issues } = await octokit.rest.issues.listForRepo({
       owner: context.repo.owner,
       repo: context.repo.repo,
       state: 'all',
@@ -125,7 +125,7 @@ const run = async () => {
         core.info(`Would create issue '${issue.title}' with content '${issue.body}'`)
       } else {
         try {
-          const { data } = await octokit.issues.create({
+          const { data } = await octokit.rest.issues.create({
             owner: context.repo.owner,
             repo: context.repo.repo,
             title: issue.title,

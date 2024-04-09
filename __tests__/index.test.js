@@ -38,9 +38,11 @@ https.get = jest.fn().mockImplementation((url, callback) => {
 })
 
 const octokit = {
-  issues: {
-    create: jest.fn(),
-    listForRepo: jest.fn()
+  rest: {
+    issues: {
+      create: jest.fn(),
+      listForRepo: jest.fn()
+    }
   }
 }
 getOctokit.mockImplementation(() => octokit)
@@ -51,20 +53,20 @@ test('handles feeds without any entries', async () => {
   await run()
 
   expect(https.get).toHaveBeenCalledTimes(1)
-  expect(octokit.issues.listForRepo).not.toHaveBeenCalled()
-  expect(octokit.issues.create).not.toHaveBeenCalled()
+  expect(octokit.rest.issues.listForRepo).not.toHaveBeenCalled()
+  expect(octokit.rest.issues.create).not.toHaveBeenCalled()
 })
 
 test('handles feed entries without titles', async () => {
   const date = '2021-06-19T01:01:29+12:00'
   mockHTTPSGet.__RETURN__ = `<feed xmlns="http://www.w3.org/2005/Atom"><entry><published>${date}</published><content type="html">TBD</content></entry></feed>`
   core.__INPUTS__['max-age'] = '9999d'
-  octokit.issues.listForRepo.mockReturnValueOnce({ data: [] })
+  octokit.rest.issues.listForRepo.mockReturnValueOnce({ data: [] })
   await run()
 
   expect(https.get).toHaveBeenCalledTimes(1)
-  expect(octokit.issues.listForRepo).toHaveBeenCalledTimes(1)
-  expect(octokit.issues.create).toHaveBeenCalledWith({
+  expect(octokit.rest.issues.listForRepo).toHaveBeenCalledTimes(1)
+  expect(octokit.rest.issues.create).toHaveBeenCalledWith({
     owner: 'owner',
     repo: 'repo',
     title: new Date(date).toUTCString(),
@@ -103,10 +105,10 @@ Signed-off-by: Johannes Schindelin &amp;lt;johannes.schindelin@gmx.de&amp;gt;&lt
   </entry>
 </feed>
 `
-  octokit.issues.listForRepo.mockReturnValueOnce({ data: [] })
+  octokit.rest.issues.listForRepo.mockReturnValueOnce({ data: [] })
   await run()
 
-  expect(octokit.issues.create).toHaveBeenCalledWith({
+  expect(octokit.rest.issues.create).toHaveBeenCalledWith({
     owner: 'owner',
     repo: 'repo',
     title: 'ci(release-tags): use newer versions of Actions',
